@@ -9,39 +9,6 @@ const GestureHandlerConfig = {
 };
 const genders = ['Male', 'Female', 'Others'];
 
-
-const questionsWithOptions = [
-  {
-    question: 'How often do you clean your apartment?',
-    options: [
-      `I don't things clean`, 'Once a month', 'Once a week', 'Every few days'
-    ]
-  },
-  {
-    question: 'Do you smoke?',
-    options: [
-      'Yes', 'No'
-    ]
-  },
-  {
-    question: 'How do you feel about pets?',
-    options: [
-      'No pets please', 'Depend on the pet', `No pets myself,but I don't mind living with them`, 'I live with pet of my own!'
-    ]
-  },
-  {
-    question: 'How about guests?',
-    options: [
-      'No guests,please!', 'Only during the day', 'No problem!'
-    ]
-  },
-  {
-    question: 'What are you interested in?',
-    options: [
-      'Foodie', 'Gym & Sport', 'Party', 'Bookworm', 'Night owl', 'Healthy', 'Travel', 'Culture', 'History'
-    ]
-  }
-]
 const Categories = [
   {
     title: 'Room',

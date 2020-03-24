@@ -17,14 +17,13 @@ const styles = StyleSheet.create({
     footer: {
         flex: 1,
         justifyContent: 'flex-end',
-        // margin: 20
     },
     primaryColor: {
         color: "#40A8FB"
     },
     dangerColor: {
         color: 'red'
-    }
+    },
 })
 
 export default styles

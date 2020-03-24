@@ -9,9 +9,14 @@ const store = configureStore()
 const App = () => (
   <NavigationContainer>
     <Provider store={store}>
-      <Routes />
+      <Routes token={token} />
     </Provider>
   </NavigationContainer>
 );
+const mapStateToProps = state => {
+  return {
+    token: state.auth.user.token
+  }
+}
 
-export default App;
+export default connect(mapStateToProps, null)(App);

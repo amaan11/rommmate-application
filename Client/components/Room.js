@@ -60,8 +60,6 @@ const Room = ({ userImage, userName, age, userType, isVerified, title, rent, isA
                     </View>
                 </View>
                 <View>
-                    {/* <TouchableOpacity onPress={ModalDropdown.show()}>
-                    </TouchableOpacity> */}
                     <ModalDropdown options={['View Details', 'Check Photos', 'View LandLord Profile']} dropdownStyle={styles.dropdownView} >
                         <IonicIcons name="ios-more" color="black" size={30} />
                     </ModalDropdown>

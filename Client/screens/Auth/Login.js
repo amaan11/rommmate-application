@@ -10,8 +10,6 @@ import {
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import Icon from 'react-native-vector-icons/Ionicons';
-// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-// import LocalAuth from "react-native-local-auth;
 import FlashMessage, { showMessage } from "react-native-flash-message";
 import { CustomTextInput, CustomButton, Loader } from '../../components';
 import * as authActions from "../../redux/actions/auth"
@@ -100,33 +98,12 @@ class Login extends Component {
               message: 'Login Successful!',
               type: "success",
             });
-            this.props.navigation.navigate("CategorySelect")
+            this.props.navigation.navigate("RoomList")
           })
         }
       })
     })
   };
-  // touchAuthenticationHandler = () => {
-  //   LocalAuth.authenticate({
-  //     reason: 'Authenticate Using Fingerprint or Phone Password! ',
-  //     fallbackToPasscode: true,
-  //     suppressEnterPassword: true
-  //   })
-  //     .then(success => {
-  //       if (success) {
-  //         // this.props
-  //       }
-  //     })
-  //     .catch(error => {
-  //       showMessage({
-  //         message: 'Touch Authentication Failed!',
-  //         type: "danger",
-  //         hideOnPress: false,
-  //         autoHide: true,
-  //         style: { height: 1, width: '90%', marginBottom: 150 }
-  //       })
-  //     })
-  // }
   render() {
     const { isEmailValid, isPasswordValid, email, password, loading } = this.state;
     const { navigate } = this.props.navigation;
@@ -155,7 +132,6 @@ class Login extends Component {
           {email !== '' && !isEmailValid && (
             <Text style={CustomStyle.errorMessage}>Please enter a valid email</Text>
           )}
-
           <CustomTextInput
             label="Password"
             placeholder="Password"
@@ -171,22 +147,6 @@ class Login extends Component {
             <Text style={[styles.forgetText, CustomStyle.primaryColor]}>Forgot Password?</Text>
           </TouchableOpacity>
         </View>
-
-        {/* Login Using Touch */}
-
-        {/* <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 50 }}>
-          <View style={[CustomStyle.flex]}>
-            <Text style={[CustomStyle.dangerColor, { paddingRight: 5, paddingBottom: 10 }]}>NEW!</Text>
-            <Text>Quick Login Using TouchID</Text>
-          </View>
-          <TouchableOpacity onPress={this.touchAuthenticationHandler} activeOpacity="0.2">
-            <MaterialIcons
-              name="touch-app"
-              size={30}
-              color="#40A8FB"
-            />
-          </TouchableOpacity>
-        </View> */}
         <View style={CustomStyle.footer}>
           <KeyboardAvoidingView behavior="position" keyboardVerticalOffset="30">
             <CustomButton
@@ -209,7 +169,6 @@ class Login extends Component {
           <FlashMessage position="center" floating={true} icon="danger" />
         </View>
       </View >
-
     );
   }
 }

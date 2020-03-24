@@ -6,7 +6,6 @@ import { createAppContainer } from 'react-navigation';
 import FindPlaces from '../screens/OnBoarding/FindPlaces';
 import MatchPreferences from '../screens/OnBoarding/MatchPreferences';
 import LikeMindedPeople from '../screens/OnBoarding/LikeMindedPeople';
-
 import Login from '../screens/Auth/Login';
 import CreateAccount from "../screens/Auth/CreateAccount"
 import ForgetPassword from '../screens/Auth/ForgetPassword';
@@ -17,7 +16,12 @@ import CategorySelect from '../screens/Profile/CategorySelect';
 import SetUserDetails from '../screens/Profile/SetUserDetails';
 import VerificationCode from '../screens/Profile/VerificationCode';
 import ApartmentQuestion from '../screens/Questions/ApartmentQuestion';
+import GuestQuestion from '../screens/Questions/GuestQuestion';
+import PetQuestion from '../screens/Questions/PetQuestion';
+import SmokeQuestion from '../screens/Questions/SmokeQuestion';
+import InterestSelection from '../screens/Questions/InterestSelection';
 import RoomList from '../screens/Home/RoomList';
+import RoomDetails from '../screens/Home/RoomDetails';
 
 
 const MainNavigator = createStackNavigator(
@@ -34,11 +38,16 @@ const MainNavigator = createStackNavigator(
     CategorySelect,
     SetUserDetails,
     VerificationCode,
-    RoomList
-
+    ApartmentQuestion,
+    GuestQuestion,
+    PetQuestion,
+    SmokeQuestion,
+    InterestSelection,
+    RoomList,
+    RoomDetails
   },
   {
-    initialRouteName: 'RoomList',
+    initialRouteName: this.props.token ? RoomList : Login,
     headerMode: 'none',
   },
 );
