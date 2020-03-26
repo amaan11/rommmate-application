@@ -26,9 +26,9 @@ router.get("/login", async (req, res, next) => {
     try {
         const { email, password } = req.query;
         if (!email || !password) {
-            return res.status(200).json({ error: { message: 'Invalid Email/Password' } })
+            return res.status(500).json({ error: { message: 'Invalid Email/Password' } })
         }
-        const response = await login(email, password, loginType);
+        const response = await login(email, password);
         if (!response["isSuccess"]) {
             return res.status(500).json(response)
         }

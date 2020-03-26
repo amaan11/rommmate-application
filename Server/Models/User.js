@@ -23,14 +23,6 @@ const User = sequelize.define("users", {
         type: Sequelize.STRING,
         allowNull: false
     },
-    login_type: {
-        type: Sequelize.ENUM,
-        values: ['email_login', 'fingerprint_login'],
-    },
-    access_token: {
-        type: Sequelize.STRING,
-        allowNull: true
-    },
     reset_password_token: {
         type: Sequelize.STRING,
         allowNull: true

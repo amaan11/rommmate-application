@@ -12,7 +12,7 @@ import UserPreferenceController from "./Controllers/UserPreferenceController"
 import UserProfileController from "./Controllers/UserProfileController"
 
 const app = express();
-// const server = http.createServer(app);
+// const server = http.createserver(app);
 
 // JSON Request
 app.use(bodyParser.json());
