@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native'
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import IonicIcons from 'react-native-vector-icons/IonicIcons';
-import SlidingImage from '../../components/SlidingImage';
-import { CustomStyle } from "../../utils"
+// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+// import IonicIcons from 'react-native-vector-icons/IonicIcons';
+// import SlidingImage from '../../components/SlidingImage';
+// import { CustomStyle } from "../../utils"
 
 const images = [
     {
@@ -59,7 +59,7 @@ class RoomDetails extends Component {
         const rent = "200"
         return (
             <View>
-                <SlidingImage roomImages={images} />
+                {/* <SlidingImage roomImages={images} />
                 <View style={[CustomStyle.flex, { marginBottom: 10 }]}>
                     <MaterialIcons name="verified-user" color="#08C299" size={20} />
                     <Text style={[styles.textGreen, { marginHorizontal: 5 }]}>{isVerified ? 'VERFIED' : 'NOT VERIFIED'}</Text>
@@ -88,7 +88,7 @@ class RoomDetails extends Component {
                     </View>
                 </View>
                 <View>
-                </View>
+                </View> */}
             </View>
         );
     }

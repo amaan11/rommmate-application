@@ -1,4 +1,4 @@
-export const API_URL = "http://192.168.2.3:8000"
+export const API_URL = "http://192.168.2.4:8000"
 
 //-----------------Auth -----------------//
 
@@ -10,3 +10,4 @@ export const RESET_PASSWORD_RESPONSE = 'RESET_PASSWORD_RESPONSE'
 
 
 //----------------PROFILE -----------------//
+

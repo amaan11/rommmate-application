@@ -11,10 +11,11 @@ export const authenticateUser = (data) => {
             params: data
         })
             .then(response => {
+                console.log("response>>", response)
                 dispatch(authenticateUserSuccess(response.data))
             })
             .catch(error => {
-                console.log("error>>", error.response)
+                console.log("error>>", error)
                 dispatch(authenticatUserFailed(error.response.data))
             })
     }

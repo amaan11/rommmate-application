@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
-import {View, StyleSheet, Image, Text, TouchableOpacity} from 'react-native';
+import React, { Component } from 'react';
+import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
-import {Step, CustomButton} from '../../components';
-import {GestureHandlerConfig} from '../../utils/data';
+import { Step, CustomButton } from '../../components';
+import { GestureHandlerConfig } from '../../utils/data';
 
 const image = require('../../assets/match_preferance.jpg');
 const styles = StyleSheet.create({
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
 });
 class MatchPreferences extends Component {
   render() {
-    const {navigate} = this.props.navigation;
+    const { navigate } = this.props.navigation;
 
     return (
       <GestureRecognizer
@@ -69,7 +69,7 @@ class MatchPreferences extends Component {
             <CustomButton
               buttonText="GET STARTED"
               onPressHandler={() => {
-                navigate('Signup');
+                navigate('CreateAccount');
               }}
             />
             <TouchableOpacity

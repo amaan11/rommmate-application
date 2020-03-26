@@ -28,9 +28,8 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
   },
-  forgetText: {
-    textAlign: 'right',
-    fontSize: 14,
+  forgetBtn: {
+    alignItems: 'flex-end'
   },
   footerView: {
     display: 'flex',
@@ -73,36 +72,37 @@ class Login extends Component {
     }
   };
   handleSubmit = () => {
+
     Keyboard.dismiss()
     const { email, password } = this.state;
     const data = {
       email,
       password,
     }
-    this.setState({ loading: true }, () => {
-      this.props.actions.authenticateUser(data).then(() => {
-        if (this.props.user && this.props.user.error) {
-          this.setState({ loading: false }, () => {
-            showMessage({
-              message: this.props.user.error.message ? this.props.user.error.message : 'Error in Login!Try Again',
-              type: "danger",
-              hideOnPress: false,
-              autoHide: true,
-              style: { height: 1, width: '90%' }
-            })
+    // this.setState({ loading: true }, () => {
+    this.props.actions.authenticateUser(data).then(() => {
+      console.log("props>>", this.props)
+
+      this.setState({ loading: false }, () => {
+        if (this.props.authError && this.props.authError.error) {
+          showMessage({
+            message: this.props.authError.error.message ? this.props.authError.error.message : 'Error!',
+            type: "danger",
+            hideOnPress: false,
+            autoHide: true,
+            style: { height: 1, width: '90%' }
           })
         }
         else {
-          this.setState({ loading: false }, () => {
-            showMessage({
-              message: 'Login Successful!',
-              type: "success",
-            });
-            this.props.navigation.navigate("RoomList")
-          })
+          showMessage({
+            message: 'Login Successful!',
+            type: "success",
+          });
+          // this.props.navigation.navigate("RoomList")
         }
       })
     })
+    // })
   };
   render() {
     const { isEmailValid, isPasswordValid, email, password, loading } = this.state;
@@ -143,25 +143,23 @@ class Login extends Component {
               Password must be atleast 8 characters
             </Text>
           )}
-          <TouchableOpacity onPress={() => navigate('ForgetPassword')}>
-            <Text style={[styles.forgetText, CustomStyle.primaryColor]}>Forgot Password?</Text>
+          <TouchableOpacity style={styles.forgetBtn} onPress={() => navigate('ForgetPassword')}>
+            <Text style={CustomStyle.primaryColor}>Forgot Password?</Text>
           </TouchableOpacity>
         </View>
         <View style={CustomStyle.footer}>
           <KeyboardAvoidingView behavior="position" keyboardVerticalOffset="30">
             <CustomButton
               buttonText="Login"
-              onPressHandler={
-                this.handleSubmit
-              }
-              disabled={!isEmailValid || !isPasswordValid}
+              onPressHandler={this.handleSubmit}
+            // disabled={!isEmailValid || !isPasswordValid}
             />
 
             <View style={styles.footerView}>
               <Text style={{ paddingTop: 2, fontSize: 16 }}>
                 Don't Have Account
               </Text>
-              <TouchableOpacity onPress={() => navigate('Signup')}>
+              <TouchableOpacity onPress={() => navigate('CreateAccount')}>
                 <Text style={styles.signUpText}>Sign up</Text>
               </TouchableOpacity>
             </View>
@@ -175,7 +173,8 @@ class Login extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.auth.user
+    user: state.auth.user,
+    authError: state.auth.authError
   }
 }
 const mapDispatchToProps = dispatch => {

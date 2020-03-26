@@ -6,11 +6,14 @@ buildscript {
         minSdkVersion = 16
         compileSdkVersion = 28
         targetSdkVersion = 28
+        googlePlayServicesVersion = "11.8.0"
+        androidMapsUtilsVersion = "0.5+"
     }
     repositories {
         google()
         jcenter()
     }
+    
     dependencies {
         classpath("com.android.tools.build:gradle:3.4.2")
 

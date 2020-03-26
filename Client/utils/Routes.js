@@ -19,11 +19,13 @@ import ApartmentQuestion from '../screens/Questions/ApartmentQuestion';
 import GuestQuestion from '../screens/Questions/GuestQuestion';
 import PetQuestion from '../screens/Questions/PetQuestion';
 import SmokeQuestion from '../screens/Questions/SmokeQuestion';
-import InterestSelection from '../screens/Questions/InterestSelection';
-import RoomList from '../screens/Home/RoomList';
-import RoomDetails from '../screens/Home/RoomDetails';
+// import InterestSelection from '../screens/Questions/InterestSelection';
+// import RoomList from '../screens/Home/RoomList';
+// import RoomDetails from '../screens/Home/RoomDetails';
+import SetLocation from '../screens/LandLord/PostAd/SetLocation';
 
 
+let token = ''
 const MainNavigator = createStackNavigator(
   {
     FindPlaces,
@@ -42,17 +44,22 @@ const MainNavigator = createStackNavigator(
     GuestQuestion,
     PetQuestion,
     SmokeQuestion,
-    InterestSelection,
-    RoomList,
-    RoomDetails
+    // InterestSelection,
+    SetLocation
   },
   {
-    initialRouteName: this.props.token ? RoomList : Login,
+    initialRouteName: "SetLocation",
     headerMode: 'none',
   },
 );
 
 const AppContainer = createAppContainer(MainNavigator);
 
-const Routes = () => <AppContainer />;
+const Routes = ({ token }) => {
+  // console.log("token>>", token)
+  // token = token
+  return (
+    <AppContainer />
+  )
+}
 export default Routes;

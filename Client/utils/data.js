@@ -33,4 +33,4 @@ const Categories = [
     colors: ['#FF9203', '#FF8413', '#FF5E3A'],
   },
 ];
-export { GestureHandlerConfig, genders, questionsWithOptions, Categories };
+export { GestureHandlerConfig, genders, Categories };

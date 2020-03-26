@@ -69,7 +69,7 @@ class FindPlaces extends Component {
             <CustomButton
               buttonText="GET STARTED"
               onPressHandler={() => {
-                navigate('Signup');
+                navigate('CreateAccount');
               }}
             />
             <TouchableOpacity
