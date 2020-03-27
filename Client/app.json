@@ -1,4 +1,7 @@
 {
   "name": "rommateApp",
-  "displayName": "rommateApp"
+  "displayName": "rommateApp",
+  "android": {
+    "package": "com.geeky.roommateapp"
+  }
 }

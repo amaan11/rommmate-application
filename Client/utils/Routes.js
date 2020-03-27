@@ -23,9 +23,12 @@ import SmokeQuestion from '../screens/Questions/SmokeQuestion';
 // import RoomList from '../screens/Home/RoomList';
 // import RoomDetails from '../screens/Home/RoomDetails';
 import SetLocation from '../screens/LandLord/PostAd/SetLocation';
+import PropertyDetails from '../screens/LandLord/PostAd/PropertyDetails';
+import RoomDetails from '../screens/LandLord/PostAd/RoomDetails';
+import AdSuccessful from '../screens/LandLord/PostAd/AdSuccessful';
+import LandLordAdCurrentRoommate from '../screens/LandLord/PostAd/CurrentRoommate';
+import AdDetails from '../screens/LandLord/PostAd/AdDetails';
 
-
-let token = ''
 const MainNavigator = createStackNavigator(
   {
     FindPlaces,
@@ -45,10 +48,15 @@ const MainNavigator = createStackNavigator(
     PetQuestion,
     SmokeQuestion,
     // InterestSelection,
-    SetLocation
+    SetLocation,
+    PropertyDetails,
+    RoomDetails,
+    AdSuccessful,
+    LandLordAdCurrentRoommate,
+    AdDetails
   },
   {
-    initialRouteName: "SetLocation",
+    initialRouteName: "AdDetails",
     headerMode: 'none',
   },
 );

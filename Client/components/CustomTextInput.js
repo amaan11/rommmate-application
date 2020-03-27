@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Proptypes from 'prop-types';
-import {Text, TextInput, TouchableOpacity} from 'react-native';
+import { Text, TextInput, TouchableOpacity } from 'react-native';
 
 const styles = {
   inputView: {
@@ -47,14 +47,14 @@ const CustomTextInput = ({
       />
     </TouchableOpacity>
   ) : (
-    <TextInput
-      style={[styles.inputView, {fontSize: 20}]}
-      placeholder={placeholder}
-      onFocus={() => {
-        setFocusTextInput(true);
-      }}
-    />
-  );
+      <TextInput
+        style={[styles.inputView, { fontSize: 20 }]}
+        placeholder={placeholder}
+        onFocus={() => {
+          setFocusTextInput(true);
+        }}
+      />
+    );
 };
 
 CustomTextInput.propTypes = {

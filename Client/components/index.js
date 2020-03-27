@@ -8,3 +8,4 @@ export { default as CategoryType } from './CategoryType';
 export { default as DatePicker } from './DatePicker';
 export { default as Question } from './Question';
 export { default as Loader } from './Loader';
+export { default as RangeSlider } from './RangeSlider';
