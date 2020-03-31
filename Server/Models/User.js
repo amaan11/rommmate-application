@@ -1,7 +1,7 @@
 import { Sequelize, QueryTypes } from "sequelize";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import moment, { utc } from 'moment'
+import moment from 'moment'
 import { secret, sequelize } from "../utils/config";
 
 const User = sequelize.define("users", {
@@ -57,10 +57,9 @@ const login = async (email, password) => {
     });
     if (!user) {
         response["isSuccess"] = false
-        response["error"] = { message: 'Invalid email ! Try Again!' };
+        response["error"] = { message: 'Invalid email!Please enter a registered email!' };
 
     } else {
-        /// expiry 
         await validPassword(password, user.password)
             .then(res => {
                 if (res) {
@@ -68,9 +67,7 @@ const login = async (email, password) => {
                         email: user.email,
                         exp: Math.floor(Date.now() / 1000) + (60 * 60),
                     }, secret);
-                    user.access_token = token
-                    user.save()
-                    response['data'] = { token: token, user: user }
+                    response['data'] = { token: token }
                     response["isSuccess"] = true
                 } else {
                     response["isSuccess"] = false
@@ -84,21 +81,18 @@ const login = async (email, password) => {
     return response;
 };
 
-const registerUser = async (email, password, loginType) => {
+const registerUser = async (email, password) => {
     let response = {};
     await User.create({
         email: email,
         password: generateHash(password),
-        login_type: loginType,
     })
         .then(res => {
             if (res) {
                 const token = jwt.sign({
-                    email: user.email,
+                    email: res.email,
                     exp: Math.floor(Date.now() / 1000) + (60 * 60),
                 }, secret);
-                res.access_token = token
-                res.save()
                 response['token'] = token
                 response["isSuccess"] = true
             }
@@ -107,7 +101,8 @@ const registerUser = async (email, password, loginType) => {
             }
         })
         .catch(error => {
-            throw new Error(error);
+            console.log("error>>", error)
+            // throw new Error(error);
         });
     return response;
 };
@@ -138,7 +133,7 @@ const updateUser = async (email, newPassword) => {
         .then(res => {
             if (!res) {
                 response['isSuccess'] = false
-                response["message"] = "No User Found!!";
+                response["message"] = "User Not Found!!";
             } else {
                 res.password = generateHash(newPassword);
                 res.save();
@@ -172,7 +167,6 @@ const checkResetCode = async (resetCode, email) => {
     const users = await sequelize.query('SELECT * FROM users WHERE email = ? AND reset_password_token = ? AND reset_password_expires > ?', {
         replacements: [email, resetCode, moment().utc().format("YYYY-MM-DD HH:mm:ss")],
         type: QueryTypes.SELECT
-
     })
     if (users && users.length > 0) {
         isValid = true

@@ -26,13 +26,13 @@ router.get("/login", async (req, res, next) => {
     try {
         const { email, password } = req.query;
         if (!email || !password) {
-            return res.status(500).json({ error: { message: 'Invalid Email/Password' } })
+            return res.status(500).json({ error: { message: 'Invalid Inputs', data: '' } })
         }
         const response = await login(email, password);
         if (!response["isSuccess"]) {
-            return res.status(500).json(response)
+            return res.status(500).json({ error: { message: response.error.message, data: '' } })
         }
-        return res.status(200).json(response.data)
+        return res.status(200).json({ data: response.data, message: 'Login Successful!' })
 
     } catch (error) {
         next(error);
@@ -51,12 +51,13 @@ router.post(
         try {
             let response = {};
             const { email, password } = req.body;
-            const isEmailExist = await emailAlreadyExist(email);
             const errors = validationResult(req);
 
             if (!errors.isEmpty()) {
-                return res.status(422).json({ error: errors.array() });
+                return res.status(422).json({ error: { data: errors.errors, message: 'Invalid Inputs' } });
             }
+            const isEmailExist = await emailAlreadyExist(email);
+
             if (isEmailExist) {
                 return res.status(400).json({ error: { message: 'Email Already Exist!You can login  directly!' } })
             } else {
@@ -64,7 +65,7 @@ router.post(
                 if (!response.isSuccess) {
                     return res.status(500).json({ error: { message: 'Something went wrong!' } })
                 }
-                return res.status(200).json({ data: { token: response.token, message: 'Account Created Successfully!' } })
+                return res.status(200).json({ data: { token: response.token, message: 'Account Created Successfully!' }, error: '' })
             }
         } catch (error) {
             next(error);
@@ -74,11 +75,10 @@ router.post(
 
 router.post("/forget-password", async (req, res, next) => {
     try {
-        console.log("req>>", req.query)
         const { email } = req.query;
         const emailExist = await emailAlreadyExist(email);
         if (!email || !emailExist) {
-            return res.status(400).json({ error: { message: 'Please enter a registered email!' } });
+            return res.status(400).json({ error: { message: 'Please enter a registered email!', data: '' } });
         } else {
             const resetCode = Math.random().toString(36).replace('0.', '').substring(0, 8)
             let mailOptions = {
@@ -95,7 +95,6 @@ router.post("/forget-password", async (req, res, next) => {
                     return res.status(500).json({ error: { message: 'Something Went Wrong!Try Again!' } });
                 } else {
                     let response = await storeResetCode(resetCode, email)
-                    console.log("response>>", response)
                     if (!response) {
                         return res.status(500).json({ error: { message: 'Something Went Wrong!Try Again' } });
                     }
@@ -114,18 +113,18 @@ router.put(
             const { resetCode } = req.query
             const isvalidResetCode = await checkResetCode(resetCode, email)
             if (!isvalidResetCode) {
-                return res.status(400).json({ error: { message: 'Please enter a valid reset Code!' } })
+                return res.status(400).json({ error: { message: 'Please enter a valid reset Code!', data: '' } })
             }
             else
                 if (!password || !confirmPassword || password.length <= 8 || password !== confirmPassword) {
-                    return res.status(400).json({ error: { message: 'Invalid inputs' } })
+                    return res.status(400).json({ error: { message: 'Invalid inputs', data: '' } })
                 }
                 else {
-                    let response = updateUser(email, password)
+                    let response = await updateUser(email, password)
                     if (!response.isSuccess) {
-                        return res.status(500).json({ error: response })
+                        return res.status(500).json({ error: { message: response.message, data: '' } })
                     }
-                    return res.status(200).json({ data: response })
+                    return res.status(200).json({ data: { message: response.message }, error: '' })
                 }
 
         } catch (error) {
