@@ -54,6 +54,15 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center',
     paddingTop: 7
+  },
+  footer: {
+    marginHorizontal: 20,
+    marginBottom: 20
+  },
+  tryCodeText: {
+    color: '#40A8FB',
+    paddingLeft: 5,
+    fontSize: 16
   }
 });
 
@@ -194,7 +203,7 @@ class VerificationCode extends Component {
               style={styles.backIcon}
             />
           </TouchableOpacity>
-          <Text style={styles.stepText}>Step 5-5</Text>
+          <Text style={styles.stepText}>Step 4-4</Text>
         </View>
         <ProgressBar percentage="100" />
         <View style={styles.container}>
@@ -260,15 +269,14 @@ class VerificationCode extends Component {
           </View>
           <Text style={styles.innerText}>This help us authenticate every user on Stacy,</Text>
           <Text style={styles.innerText}>for your peace of mind.</Text>
-          <View style={[CustomStyle.flex, CustomStyle.justifyBetween, { marginTop: 50, }]}>
+          <View style={[CustomStyle.flex, CustomStyle.justifyCenter, { marginTop: 50, }]}>
             <Text style={{ fontSize: 16, paddingTop: 1 }}>Didn't get a code?</Text>
             <TouchableOpacity>
-              <Text style={{ color: '#40A8FB', paddingLeft: 5, fontSize: 16 }}>Try Again</Text>
+              <Text style={styles.tryCodeText}>Try Again</Text>
             </TouchableOpacity>
           </View>
         </View>
-
-        <View style={CustomStyle.footer}>
+        <View style={[CustomStyle.footer, { margin: 20 }]}>
           <KeyboardAvoidingView behavior="position" keyboardVerticalOffset="50">
             <CustomButton
               buttonText="DONE"

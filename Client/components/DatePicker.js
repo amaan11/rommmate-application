@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 10,
-    marginVertical: 15,
+    // marginVertical: 20,
   },
   label: {
     fontSize: 15,

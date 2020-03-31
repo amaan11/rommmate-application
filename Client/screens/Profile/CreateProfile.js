@@ -9,18 +9,19 @@ import {
   TouchableOpacity,
   Picker,
   Image,
-  Dimensions
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux'
+import Icon from 'react-native-vector-icons/Ionicons';
+import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Modal, { ModalTitle, ModalContent } from "react-native-modals";
 import ImagePicker from 'react-native-image-crop-picker';
 import { ProgressBar, CustomTextInput, CustomButton, DatePicker } from '../../components';
-import { genders } from '../../utils/data';
+import { genders, DEVICE_WIDTH } from '../../utils/data';
 import CustomStyle from '../../utils/styles'
 
-const DEVICE_WIDTH = Dimensions.get('window').width
+const cities = ["Ahmedabad", "Bangalore", "Ahmedabad", "Bangalore", "Ahmedabad", "Bangalore", "Ahmedabad", "Bangalore", "Ahmedabad", "Bangalore", "Ahmedabad", "Bangalore", "Ahmedabad", "Bangalore", "Ahmedabad", "Bangalore", "AHmedabad", "Bangalore", "AHmedabad", "Bangalore"]
+const countryImage = require("../../assets/country-image.png")
 const styles = StyleSheet.create({
   backIcon: {
     marginTop: 15,
@@ -36,27 +37,33 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     flex: 1,
   },
-  heading: {
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
   genderView: {
     borderWidth: 1,
     borderColor: '#40A8FB',
     borderRadius: 5,
     marginTop: 20,
   },
+  phoneNumberView: {
+    width: '100%',
+    height: 60,
+    borderWidth: 1,
+    borderColor: 'rgb(221,221,221)',
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    paddingTop: 5,
+    marginBottom: 10
+  },
   genderBtn: {
     width: 120,
     height: 40,
     borderRightWidth: 1,
     borderRightColor: '#40A8FB',
-    paddingTop: 10,
   },
   genderText: {
     color: '#40A8FB',
     fontSize: 13,
     textAlign: 'center',
+    paddingTop: 10
   },
   selectedGender: {
     color: 'white',
@@ -76,6 +83,10 @@ const styles = StyleSheet.create({
   },
   picker: {
     height: 40,
+  },
+  flagImage: {
+    width: 20,
+    height: 20
   },
   locationText: {
     paddingBottom: 20,
@@ -107,33 +118,45 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "blue",
     padding: 15
-  }
+  },
+  closeImageIcon: {
+    width: 25,
+    height: 25,
+    borderRadius: 12.5,
+    backgroundColor: "#E94862",
+    position: 'absolute',
+    top: 10,
+    right: 20,
+  },
 });
 class CreateProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      locations: ['Test', 'test1'],
-      selectedPlace: [],
       fullName: '',
       selectedGender: '',
-      userInfo: '',
       birthDate: '',
+      phoneNumber: '',
+      location: '',
       profession: '',
-      selectedPlace: '',
+      userInfo: '',
       uploadedImages: [],
       isModalVisible: false,
+      isSubmitted: false
     };
   }
   handleValueChange = (key, value) => {
+    console.log("key>>>", key + ".." + value)
     this.setState({ [key]: value })
   }
   toggleModalHandler = () => {
     const { isModalVisible } = this.state
     this.setState({ isModalVisible: !isModalVisible })
   }
-
   createProfileHandler = () => {
+    const { fullName, selectedGender, birthDate, phoneNumber, profession, location, userInfo, uploadedImages } = this.state
+    this.setState({ isSubmitted: true })
+
     // API CALL Here
   }
   uploadImageHandler = (type) => {
@@ -182,25 +205,23 @@ class CreateProfile extends Component {
   };
   onRemoveImageHandler = (key) => {
     const { uploadedImages } = this.state
-
-    const filteredImages = uploadedImages.filter((image, index) => key !== index)
-
-    this.setState({ uploadImages: filteredImages })
-
+    let images = [...uploadedImages]
+    const filteredImages = images.filter((image, index) => key !== index)
+    this.setState({ uploadedImages: filteredImages })
   }
 
   render() {
     const {
-      selectedGender,
-      locations,
-      selectedPlace,
       fullName,
+      selectedGender,
+      birthDate,
+      phoneNumber,
       profession,
+      location,
       uploadedImages,
-      isModalVisible
+      isModalVisible,
+      isSubmitted,
     } = this.state;
-
-    const email = get(user, 'email', '')
 
     return (
       <View style={{ flex: 1 }}>
@@ -213,12 +234,12 @@ class CreateProfile extends Component {
               style={styles.backIcon}
             />
           </TouchableOpacity>
-          <Text style={styles.stepText}>Step 4-5</Text>
+          <Text style={styles.stepText}>Step 3-4</Text>
         </View>
         <ProgressBar percentage="80" />
         <View style={styles.mainView}>
-          <Text style={[styles.heading, { marginTop: 30 }]}>Create</Text>
-          <Text style={styles.heading}>Your Profile</Text>
+          <Text style={[CustomStyle.heading, { marginTop: 30 }]}>Create</Text>
+          <Text style={CustomStyle.heading}>Your Profile</Text>
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={{ marginTop: 30 }}>
@@ -230,13 +251,14 @@ class CreateProfile extends Component {
               }}
               value={fullName}
             />
+            {isSubmitted && !fullName && <Text style={CustomStyle.errorMessage}>Please enter your name</Text>}
             <View style={{ marginTop: 10 }}>
               <Text>Gender</Text>
-              <View style={[styles.flexView, styles.genderView]}>
+              <View style={[CustomStyle.flex, styles.genderView]}>
                 {genders.map((gender, index) => (
                   <TouchableOpacity
-                    activeOpacity={1}
-                    onPress={() => this.handleValueChange('gender', gender)}
+                    activeOpacity={0.7}
+                    onPress={() => this.handleValueChange('selectedGender', gender)}
                     style={[
                       styles.genderBtn,
                       gender === selectedGender && styles.selectedGender,
@@ -252,15 +274,31 @@ class CreateProfile extends Component {
                   </TouchableOpacity>
                 ))}
               </View>
+              {isSubmitted && !selectedGender && <Text style={[CustomStyle.errorMessage, { paddingTop: 10 }]}>Please select gender</Text>}
             </View>
-            <DatePicker
-              label="Your Birthday"
-              onDateChange={() => this.handleValueChange('birthDate', value)}
-            />
+            <View style={{ marginVertical: 20 }}>
+              <DatePicker
+                label="Your Birthday"
+                onDateChange={(value) => this.handleValueChange('birthDate', value)}
+              />
+              {isSubmitted && !birthDate && <Text style={[CustomStyle.errorMessage, { paddingTop: 10 }]}>Please select your birth date</Text>}
+            </View>
+            <View style={styles.phoneNumberView}>
+              <Text>Phone Number</Text>
+              <View style={[CustomStyle.flex, { marginTop: 5 }]}>
+                <Image source={countryImage} style={styles.flagImage} />
+                <Text>+91</Text>
+                <TextInput style={{ marginTop: -15 }}
+                  onChangeText={(text) => { this.handleValueChange('phoneNumber', text) }}
+                  keyboardType="numeric"
+                />
+              </View>
+            </View>
+            {isSubmitted && phoneNumber.length < 10 && <Text style={CustomStyle.errorMessage}>Please enter a valid phone number</Text>}
             <CustomTextInput
               label="Email"
               placeholder="Email"
-              value={email}
+              value="asalheen1997@gmail.com"
               isEditable={false}
             />
             <CustomTextInput
@@ -272,19 +310,21 @@ class CreateProfile extends Component {
               value={profession}
             />
             <View>
-              <Text style={styles.locationText}>Where do you work?</Text>
+              <Text style={styles.locationText}>Current Location</Text>
               <View style={styles.pickerView}>
                 <Picker
-                  selectedValue={selectedPlace}
+                  selectedValue={location}
+                  showSearch
                   onValueChange={itemValue =>
-                    this.handleValueChange('selectedPlace', itemValue)
+                    this.handleValueChange('location', itemValue)
                   }
-                  style={styles.picker}>
-                  {locations.map(location => (
+                  style={{ width: '100%' }}>
+                  {cities.map(location => (
                     <Picker.Item label={location} value={location} />
                   ))}
                 </Picker>
               </View>
+              {isSubmitted && !location && <Text style={[CustomStyle.errorMessage, { paddingTop: 10 }]}>Please select your location</Text>}
             </View>
             <View style={styles.borderedView}>
               <Text style={{ color: '#707070' }}>About Me</Text>
@@ -301,15 +341,14 @@ class CreateProfile extends Component {
                 (Max 5 photos)
               </Text>
             </View>
-            <View style={[styles.flexView, { flexWrap: 'wrap' }]}>
-
-              <View style={styles.addImageView}>
+            <View style={[CustomStyle.flex, { flexWrap: 'wrap' }]}>
+              {uploadedImages.length < 5 && <View style={styles.addImageView}>
                 <TouchableOpacity
                   style={styles.addbtn}
                   onPress={this.toggleModalHandler} >
                   <MaterialIcons name="add" size={30} color="#40A8FB" />
                 </TouchableOpacity>
-              </View>
+              </View>}
               <Modal.BottomModal
                 visible={isModalVisible}
                 onTouchOutside={this.toggleModalHandler}
@@ -333,19 +372,23 @@ class CreateProfile extends Component {
                 </ModalContent>
               </Modal.BottomModal>
               {uploadedImages.length > 0 && (
-                uploadedImages.map(image => (
-                  <Image
-                    source={{
-                      uri:
-                        image.sourceUri
-                    }}
-                    style={styles.uploadedImage}
-                  />
+                uploadedImages.map((image, index) => (
+                  <View>
+                    <Image
+                      source={{
+                        uri:
+                          image.sourceUri
+                      }}
+                      style={styles.uploadedImage}
+                    />
+                    <TouchableOpacity style={styles.closeImageIcon} onPress={() => { this.onRemoveImageHandler(index) }}>
+                      <AntDesignIcon name="close" size={25} color="white" />
+                    </TouchableOpacity>
+                  </View>
                 ))
-
               )}
             </View>
-            <CustomButton buttonText="NEXT" onPressHandler={this.handleSubmit} onPressHandler={this.createProfileHandler} />
+            <CustomButton buttonText="NEXT" onPressHandler={this.createProfileHandler} />
           </ScrollView>
         </View>
       </View >
@@ -354,13 +397,12 @@ class CreateProfile extends Component {
 }
 const mapStateToProps = state => {
   return {
-    user: state.auth.user
+    // user: state.auth.user
   }
 }
 const mapDispatchToProps = dispatch => {
-  // return {
-
-  // }
+  return {
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateProfile);

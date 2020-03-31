@@ -3,6 +3,7 @@ import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { Step, CustomButton } from '../../components';
 import { GestureHandlerConfig } from '../../utils/data';
+import { CustomStyle } from '../../utils'
 
 const image = require('../../assets/like-minded-people.jpeg');
 const styles = StyleSheet.create({
@@ -15,7 +16,6 @@ const styles = StyleSheet.create({
   },
   contentView: {
     flex: 1,
-    alignItems: 'center',
     margin: 30,
   },
   heading: {
@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
   },
   loginBtn: {
-    alignItems: 'center',
     marginTop: 20,
   },
   loginText: {
@@ -57,7 +56,7 @@ class LikeMindedPeople extends Component {
         style={styles.container}>
         <View style={styles.container}>
           <Image source={image} style={styles.image} />
-          <View style={styles.contentView}>
+          <View style={[CustomStyle.alignCenter, styles.contentView]}>
             <Text style={styles.heading}>Like Minded People</Text>
             <Text style={styles.content}>
               Live together with people who will inspire like you.
@@ -72,7 +71,7 @@ class LikeMindedPeople extends Component {
               }}
             />
             <TouchableOpacity
-              style={styles.loginBtn}
+              style={[CustomStyle.alignCenter, styles.loginBtn]}
               onPress={() => {
                 navigate('Login');
               }}>

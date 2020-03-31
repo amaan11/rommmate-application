@@ -45,11 +45,14 @@ const propertyTypes = ["Apartment", "House", "Studio"]
 const bedRoomTypes = [
   {
     icon: <Ionicons name="ios-bed" size={30} color="black" />,
-    text: 'Double Bed'
+    text: 'Double Bed',
+    value: 'doubleBed'
   },
   {
     icon: <FontAwesome name="bed" size={30} color="black" />,
-    text: 'Single Bed'
+    text: 'Single Bed',
+    value: 'singleBed'
+
   },
 ]
 const roomType = ["Single", "Double", "Shared"]
@@ -72,5 +75,6 @@ const occupations = [
     type: 'Students'
   },
 ]
+const furnishedTypes = ['Furnished', 'Unfurnished']
 
-export { DEVICE_WIDTH, DEVICE_HEIGHT, GestureHandlerConfig, genders, Categories, userTypes, propertyTypes, bedRoomTypes, roomType, genderWithIcon, occupations };
+export { DEVICE_WIDTH, DEVICE_HEIGHT, GestureHandlerConfig, genders, Categories, userTypes, propertyTypes, bedRoomTypes, roomType, genderWithIcon, occupations, furnishedTypes };

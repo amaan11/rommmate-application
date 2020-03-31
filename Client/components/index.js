@@ -9,3 +9,4 @@ export { default as DatePicker } from './DatePicker';
 export { default as Question } from './Question';
 export { default as Loader } from './Loader';
 export { default as RangeSlider } from './RangeSlider';
+export { default as SuccessView } from './SuccessView';

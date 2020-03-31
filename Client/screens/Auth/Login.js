@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import FlashMessage, { showMessage } from "react-native-flash-message";
 import { CustomTextInput, CustomButton, Loader } from '../../components';
 import * as authActions from "../../redux/actions/auth"
@@ -24,12 +24,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 50,
   },
-  heading: {
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
   forgetBtn: {
     alignItems: 'flex-end'
+  },
+  backBtn: {
+    marginTop: 20
   },
   footerView: {
     display: 'flex',
@@ -111,16 +110,16 @@ class Login extends Component {
       <View style={styles.container}>
         <Loader isVisible={loading} />
         <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-          <Icon
+          <Ionicons
             name="md-arrow-back"
             size={30}
             color="black"
-            style={{ marginTop: 10 }}
+            style={styles.backBtn}
           />
         </TouchableOpacity>
         <View style={styles.headingView}>
-          <Text style={styles.heading}>Hi,</Text>
-          <Text style={styles.heading}>Welcome Back</Text>
+          <Text style={CustomStyle.heading}>Hi,</Text>
+          <Text style={CustomStyle.heading}>Welcome Back</Text>
         </View>
         <View>
           <CustomTextInput
@@ -152,9 +151,8 @@ class Login extends Component {
             <CustomButton
               buttonText="Login"
               onPressHandler={this.handleSubmit}
-            // disabled={!isEmailValid || !isPasswordValid}
+              disabled={!isEmailValid || !isPasswordValid}
             />
-
             <View style={styles.footerView}>
               <Text style={{ paddingTop: 2, fontSize: 16 }}>
                 Don't Have Account

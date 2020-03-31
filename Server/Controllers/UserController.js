@@ -49,20 +49,18 @@ router.post(
     ],
     async (req, res, next) => {
         try {
-            let statusCode = "";
             let response = {};
-
+            const { email, password } = req.body;
+            const isEmailExist = await emailAlreadyExist(email);
             const errors = validationResult(req);
+
             if (!errors.isEmpty()) {
                 return res.status(422).json({ error: errors.array() });
             }
-            const { email, password, loginType } = req.body;
-            const isEmailExist = await emailAlreadyExist(email);
-
             if (isEmailExist) {
                 return res.status(400).json({ error: { message: 'Email Already Exist!You can login  directly!' } })
             } else {
-                response = await registerUser(email, password, loginType);
+                response = await registerUser(email, password);
                 if (!response.isSuccess) {
                     return res.status(500).json({ error: { message: 'Something went wrong!' } })
                 }

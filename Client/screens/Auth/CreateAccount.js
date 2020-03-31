@@ -10,8 +10,6 @@ import {
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import Icon from 'react-native-vector-icons/Ionicons';
-// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-// import LocalAuth from "react-native-local-auth;
 import FlashMessage, { showMessage } from "react-native-flash-message";
 import { CustomTextInput, CustomButton, Loader } from '../../components';
 import * as authActions from "../../redux/actions/auth"
@@ -26,9 +24,8 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 50,
     },
-    heading: {
-        fontSize: 30,
-        fontWeight: 'bold',
+    backBtn: {
+        marginTop: 20
     },
     forgetText: {
         textAlign: 'right',
@@ -117,12 +114,12 @@ class CreateAccount extends Component {
                         name="md-arrow-back"
                         size={30}
                         color="black"
-                        style={{ marginTop: 20 }}
+                        style={styles.backBtn}
                     />
                 </TouchableOpacity>
                 <View style={styles.headingView}>
-                    <Text style={styles.heading}>Create</Text>
-                    <Text style={styles.heading}>New Account</Text>
+                    <Text style={CustomStyle.heading}>Create</Text>
+                    <Text style={CustomStyle.heading}>New Account</Text>
                 </View>
                 <View>
                     <CustomTextInput

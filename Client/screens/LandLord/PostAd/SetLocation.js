@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { View, Alert, Dimensions, TouchableOpacity, Text } from "react-native";
+import { View, Alert, Dimensions, TouchableOpacity, Text, TextInput } from "react-native";
 import MapView from "react-native-maps";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Geocoder from 'react-native-geocoding';
+import IonicIcons from 'react-native-vector-icons/Ionicons';
 import IonicIcon from 'react-native-vector-icons/Ionicons';
 import Geolocation from '@react-native-community/geolocation';
 import { CustomButton, ProgressBar } from "../../../components";
@@ -17,12 +19,12 @@ const styles = {
         width: '90%',
         marginHorizontal: 20
     },
-    // inputAdressView: {
-    //     position: 'absolute',
-    //     top: 70,
-    //     width: '90%',
-    //     marginHorizontal: 20
-    // },
+    inputAdressView: {
+        position: 'absolute',
+        top: 70,
+        width: '90%',
+        marginHorizontal: 20
+    },
     backIcon: {
         marginTop: 15,
         marginLeft: 20,
@@ -33,6 +35,20 @@ const styles = {
         marginLeft: 100,
         marginTop: 15,
     },
+    input: {
+        width: '100%',
+        height: 50,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        paddingHorizontal: 20,
+        fontSize: 15,
+        paddingLeft: 50
+    },
+    searchIcon: {
+        position: 'absolute',
+        left: 20,
+        top: 15,
+    }
 }
 class SetLocation extends Component {
     constructor(props) {
@@ -41,6 +57,7 @@ class SetLocation extends Component {
             currentLocation: {},
             loading: true
         };
+        Geocoder.init("AIzaSyCs9b2sEV7ezLyhHDc9eePOzyjxPcubEcI")
     }
     componentDidMount() {
         Geolocation.getCurrentPosition(position => {
@@ -50,7 +67,13 @@ class SetLocation extends Component {
             { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 });
     }
     onDragMarkerHandler = (coordinates) => {
-        this.setState({ currentLocation: { ...this.state.currentLocation, latitude: coordinates.latitude, longitude: coordinates.longitude } });
+        Geocoder.from(41.89, 12.49)
+            .then(json => {
+                var addressComponent = json.results[0].address_components[0];
+                console.log(addressComponent);
+            })
+            .catch(error => console.log(error));
+        // this.setState({ currentLocation: { ...this.state.currentLocation, latitude: coordinates.latitude, longitude: coordinates.longitude } });
     }
     onConfirmAdressHandler = () => {
         Alert.alert(
@@ -109,9 +132,10 @@ class SetLocation extends Component {
                         <MaterialCommunityIcons name="map-marker" size={40} color="red" />
                     </MapView.Marker>
                 </MapView>
-                {/* <View style={styles.inputAdressView}>
-                    <MapInput />
-                </View> */}
+                <View style={styles.inputAdressView}>
+                    <TextInput style={styles.input} placeholder="Search Place" />
+                    <IonicIcons name="ios-search" size={20} style={styles.searchIcon} />
+                </View>
                 <View style={styles.button}>
                     <CustomButton buttonText="CONFIRM ADRDRESS" onPressHandler={this.onConfirmAdressHandler} />
                 </View>

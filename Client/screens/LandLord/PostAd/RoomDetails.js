@@ -4,9 +4,7 @@ import IonicIcons from 'react-native-vector-icons/Ionicons';
 import RangeSlider from 'rn-range-slider';
 import { CustomButton, ProgressBar, CustomTextInput, DatePicker } from "../../../components";
 import { CustomStyle } from "../../../utils"
-import { roomType } from '../../../utils/data';
-
-const DEVICE_WIDTH = Dimensions.get('window').width
+import { roomType, DEVICE_WIDTH, furnishedTypes } from '../../../utils/data';
 
 const styles = StyleSheet.create({
     headerView: {
@@ -40,13 +38,32 @@ const styles = StyleSheet.create({
         fontSize: 14,
         color: "#020433",
     },
+    selectedView: {
+        backgroundColor: "#40A8FB",
+    }
 })
 class RoomDetails extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            selectedRoomType: '',
+            selectedFurnishedType: '',
+            minStayPeriod: 3,
+            maxStayPeriod: 12
+        }
+    }
+    onChange = (key, value) => {
+        this.setState({ [key]: value })
+    }
+    minStayHandler = (minValue, maxValue) => {
+        this.setState({ minStayPeriod: Math.round(minValue / 100), maxStayPeriod: Math.round(maxValue / 100) })
+    }
     render() {
+        const { selectedFurnishedType, selectedRoomType, minStayPeriod, maxStayPeriod } = this.state
         return (
             <ScrollView vertical={true} style={{ marginBottom: 20 }}>
                 <View >
-                    <View style={[CustomStyle.flex, CustomStyle.spaceBetween, styles.headerView]}>
+                    <View style={[CustomStyle.flex, CustomStyle.justifyBetween, styles.headerView]}>
                         <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
                             <IonicIcons
                                 name="md-arrow-back"
@@ -66,16 +83,20 @@ class RoomDetails extends Component {
                     <Text style={styles.heading}>Room</Text>
                     <Text style={styles.heading}>Preferences</Text>
                     <View style={{ marginTop: 35 }}>
-                        <CustomTextInput placeholder="Rent Per Month(in Rs)" label="Rent Per Month(in Rs)" />
-                        <CustomTextInput placeholder="Deposit(in Rs)" label="Deposit(in Rs)" />
-                        <DatePicker label="Available From" />
+                        <CustomTextInput placeholder="Rent Per Month(in Rs)" label="Rent Per Month(in Rs)" isNumeric={true} onChangeHandler={(value) => this.onChange('rent', value)} />
+                        <CustomTextInput placeholder="Deposit(in Rs)" label="Deposit(in Rs)" isNumeric={true} onChangeHandler={(value) => this.onChange('deposit', value)} />
+                        <View style={{ marginVertical: 15 }} >
+                            <DatePicker label="Available From" onDateChange={(date) => this.onChange('availableDate', date)} />
+                        </View>
                         <View>
                             <Text style={styles.title}>Room Type</Text>
                             <View style={[CustomStyle.flex, { marginTop: 15 }]}>
                                 {
-                                    roomType.map(type => (
-                                        <TouchableOpacity activeOpacity={0.3} style={styles.borderedView} >
-                                            <Text style={[CustomStyle.primaryColor, { textAlign: 'center' }]}>{type}</Text>
+                                    roomType.map((type) => (
+                                        <TouchableOpacity activeOpacity={0.3} style={[styles.borderedView,
+                                        selectedRoomType === type && styles.selectedView,
+                                        ]} onPress={() => this.onChange('selectedRoomType', type)}>
+                                            <Text style={[selectedRoomType === type ? { color: 'white' } : CustomStyle.primaryColor, { textAlign: 'center' }]}>{type}</Text>
                                         </TouchableOpacity>
                                     ))
                                 }
@@ -85,18 +106,20 @@ class RoomDetails extends Component {
                             <Text style={styles.title}>Furnished or Unfurnished</Text>
                             <View style={[CustomStyle.flex, { marginTop: 15 }]}>
                                 {
-                                    ['Furnished', 'Unfurnished'].map(type => (
-                                        <TouchableOpacity activeOpacity={0.3} style={[styles.borderedView, { width: '50%' }]} >
-                                            <Text style={[CustomStyle.primaryColor, { textAlign: 'center' }]}>{type}</Text>
+                                    furnishedTypes.map((type) => (
+                                        <TouchableOpacity activeOpacity={0.3} style={[styles.borderedView, { width: '50%' },
+                                        selectedFurnishedType === type && styles.selectedView,
+                                        ]} onPress={() => this.onChange('selectedFurnishedType', type)}>
+                                            <Text style={[selectedFurnishedType === type ? { color: 'white' } : CustomStyle.primaryColor, { textAlign: 'center' }]}>{type}</Text>
                                         </TouchableOpacity>
                                     ))
                                 }
                             </View>
                         </View>
                         <View style={styles.margin}>
-                            <View style={[CustomStyle.flex, CustomStyle.spaceBetween]}>
+                            <View style={[CustomStyle.flex, CustomStyle.justifyBetween]}>
                                 <Text style={{ fontSize: 18 }}>Minimum Stay</Text>
-                                <Text style={{ fontWeight: 'bold' }}>3-6 Months</Text>
+                                <Text style={{ fontWeight: 'bold' }}>{minStayPeriod}-{maxStayPeriod} Months</Text>
                             </View>
                             <RangeSlider
                                 style={{ width: DEVICE_WIDTH - 40, height: 80 }}
@@ -109,12 +132,11 @@ class RoomDetails extends Component {
                                 selectionColor="#40A8FB"
                                 blankColor="#707070"
                                 thumbRadius={15}
-                                onValueChanged={(low, high, fromUser) => {
-                                    console.log("low>>>", low + "..." + high)
-                                    // this.setState({ rangeLow: low, rangeHigh: high })
+                                onValueChanged={(low, high) => {
+                                    this.minStayHandler(low, high)
                                 }}
                             />
-                            <View style={[CustomStyle.flex, CustomStyle.spaceBetween, { marginTop: -30 }]}>
+                            <View style={[CustomStyle.flex, CustomStyle.justifyBetween, { marginTop: -30 }]}>
                                 <Text style={CustomStyle.defaultColor}>No Minimum</Text>
                                 <Text style={CustomStyle.defaultColor} > Over 12 Months</Text>
                             </View>

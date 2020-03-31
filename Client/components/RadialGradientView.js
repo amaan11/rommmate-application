@@ -1,8 +1,9 @@
 import React from 'react';
 import Proptypes from 'prop-types'
 import { View } from 'react-native';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const RadialGradientView = ({ isImageRequired, image }) => (
+const RadialGradientView = ({ isIconRequired }) => (
   <View
     style={{
       width: 340,
@@ -29,8 +30,16 @@ const RadialGradientView = ({ isImageRequired, image }) => (
           zIndex: -1,
           margin: 30,
         }}>
-        {isImageRequired ?
-          image
+        {isIconRequired ?
+          <MaterialCommunityIcon name="checkbox-marked-circle-outline" size={120} color="white"
+            style={{
+              width: 120,
+              height: 120,
+              borderRadius: 60,
+              zIndex: -1,
+              margin: 30,
+            }}
+          />
           : <View
             style={{
               width: 120,

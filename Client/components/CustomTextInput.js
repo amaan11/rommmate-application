@@ -31,6 +31,7 @@ const CustomTextInput = ({
   type,
   value,
   isEditable,
+  isNumeric
 }) => {
   const [isFocussed, setFocusTextInput] = useState(false);
 
@@ -44,6 +45,7 @@ const CustomTextInput = ({
         secureTextEntry={type === 'password' ? true : false}
         value={value}
         editable={isEditable}
+        keyboardType={isNumeric ? 'numeric' : 'default'}
       />
     </TouchableOpacity>
   ) : (
@@ -63,9 +65,11 @@ CustomTextInput.propTypes = {
   onChangeHandler: Proptypes.func.isRequired,
   value: Proptypes.string,
   isEditable: Proptypes.bool,
+  isNumeric: Proptypes.bool
 };
 CustomTextInput.defaultProps = {
   isEditable: true,
+  isNumeric: false
 };
 
 export default CustomTextInput;

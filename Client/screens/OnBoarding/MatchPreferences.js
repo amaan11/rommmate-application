@@ -3,6 +3,7 @@ import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { Step, CustomButton } from '../../components';
 import { GestureHandlerConfig } from '../../utils/data';
+import { CustomStyle } from '../../utils'
 
 const image = require('../../assets/match_preferance.jpg');
 const styles = StyleSheet.create({
@@ -15,7 +16,6 @@ const styles = StyleSheet.create({
   },
   contentView: {
     flex: 1,
-    alignItems: 'center',
     margin: 30,
   },
   heading: {
@@ -34,7 +34,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
   },
   loginBtn: {
-    alignItems: 'center',
     marginTop: 20,
   },
   loginText: {
@@ -58,7 +57,7 @@ class MatchPreferences extends Component {
         style={styles.container}>
         <View style={styles.container}>
           <Image source={image} style={styles.image} />
-          <View style={styles.contentView}>
+          <View style={[CustomStyle.alignCenter, styles.contentView]}>
             <Text style={styles.heading}>Match Your Preferences</Text>
             <Text style={styles.content}>
               Tell us your preferences and match with the right people.
@@ -73,7 +72,7 @@ class MatchPreferences extends Component {
               }}
             />
             <TouchableOpacity
-              style={styles.loginBtn}
+              style={[CustomStyle.alignCenter, styles.loginBtn]}
               onPress={() => {
                 navigate('Login');
               }}>

@@ -3,9 +3,9 @@ import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import GestureRecognizer from 'react-native-swipe-gestures';
 import { Step, CustomButton } from '../../components';
 import { GestureHandlerConfig } from '../../utils/data';
+import { CustomStyle } from '../../utils'
 
 const image = require('../../assets/find-roommate.png');
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -16,7 +16,6 @@ const styles = StyleSheet.create({
   },
   contentView: {
     flex: 1,
-    alignItems: 'center',
     margin: 30,
   },
   heading: {
@@ -35,7 +34,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
   },
   loginBtn: {
-    alignItems: 'center',
     marginTop: 20,
   },
   loginText: {
@@ -58,10 +56,10 @@ class FindPlaces extends Component {
         style={styles.container}>
         <View style={styles.container}>
           <Image source={image} style={styles.image} />
-          <View style={styles.contentView}>
+          <View style={[CustomStyle.alignCenter, styles.contentView]}>
             <Text style={styles.heading}>Find Places to Live</Text>
             <Text style={styles.content}>
-              Find great verfified places& people to share a room with.
+              Find great verfified places & people to share a room with.
             </Text>
             <Step noOfSteps="3" isActive="1" />
           </View>
@@ -73,7 +71,7 @@ class FindPlaces extends Component {
               }}
             />
             <TouchableOpacity
-              style={styles.loginBtn}
+              style={[CustomStyle.alignCenter, styles.loginBtn]}
               onPress={() => {
                 navigate('Login');
               }}>

@@ -20,10 +20,6 @@ const styles = {
     marginHorizontal: 20,
     marginTop: 34,
   },
-  heading: {
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
   categoryView: {
     flexWrap: 'wrap',
     marginTop: 50,
@@ -47,8 +43,6 @@ class CategorySelect extends Component {
     this.setState({ selectedCategory: value });
   };
   onSubmitHandler = () => {
-    const { selectedCategory } = this.state
-
   }
   render() {
     const { selectedCategory } = this.state;
@@ -63,13 +57,13 @@ class CategorySelect extends Component {
               style={styles.backIcon}
             />
           </TouchableOpacity>
-          <Text style={styles.stepText}>Step 1-5</Text>
+          <Text style={styles.stepText}>Step 1-4</Text>
         </View>
-        <ProgressBar percentage="20" />
+        <ProgressBar percentage="25" />
         <View style={styles.container}>
-          <Text style={styles.heading}>What are you</Text>
-          <Text style={styles.heading}>looking for?</Text>
-          <View style={[sutomStyle.flex, styles.categoryView]}>
+          <Text style={CustomStyle.heading}>What are you</Text>
+          <Text style={CustomStyle.heading}>looking for ?</Text>
+          <View style={[CustomStyle.flex, styles.categoryView]}>
             {Categories.map((category, index) => (
               <CategoryType
                 title={category.title}

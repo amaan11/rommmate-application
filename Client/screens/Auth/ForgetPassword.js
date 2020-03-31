@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import FlashMessage, { showMessage } from "react-native-flash-message";
 import { CustomButton, CustomTextInput, Loader } from '../../components';
 import * as authActions from "../../redux/actions/auth"
+import { CustomStyle } from '../../utils';
 
 const styles = StyleSheet.create({
   container: {
@@ -13,15 +14,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   backIcon: {
-    marginVertical: 15,
+    marginTop: 20,
   },
   headingView: {
     marginTop: 20,
     marginBottom: 50,
-  },
-  heading: {
-    fontSize: 30,
-    fontWeight: 'bold',
   },
   contentText: {
     color: '#707070',
@@ -91,7 +88,7 @@ class ForgetPassword extends Component {
           />
         </TouchableOpacity>
         <View style={styles.headingView}>
-          <Text style={styles.heading}>Forgot Password?</Text>
+          <Text style={CustomStyle.heading}>Forgot Password?</Text>
           <Text style={styles.contentText}>
             Please enter your registered email to receive your password reset
             instructions
