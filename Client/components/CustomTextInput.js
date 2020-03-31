@@ -1,12 +1,6 @@
-<<<<<<< HEAD
 import React, { useState } from 'react';
 import Proptypes from 'prop-types';
 import { Text, TextInput, TouchableOpacity } from 'react-native';
-=======
-import React, { useState } from 'react';
-import Proptypes from 'prop-types';
-import { Text, TextInput, TouchableOpacity } from 'react-native';
->>>>>>> 00f007dfcf350b92609541510a6c5f052c20b19d
 
 const styles = {
   inputView: {
