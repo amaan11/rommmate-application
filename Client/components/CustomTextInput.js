@@ -1,6 +1,12 @@
-import React, {useState} from 'react';
+<<<<<<< HEAD
+import React, { useState } from 'react';
 import Proptypes from 'prop-types';
-import {Text, TextInput, TouchableOpacity} from 'react-native';
+import { Text, TextInput, TouchableOpacity } from 'react-native';
+=======
+import React, { useState } from 'react';
+import Proptypes from 'prop-types';
+import { Text, TextInput, TouchableOpacity } from 'react-native';
+>>>>>>> 00f007dfcf350b92609541510a6c5f052c20b19d
 
 const styles = {
   inputView: {
@@ -31,6 +37,7 @@ const CustomTextInput = ({
   type,
   value,
   isEditable,
+  isNumeric
 }) => {
   const [isFocussed, setFocusTextInput] = useState(false);
 
@@ -44,17 +51,18 @@ const CustomTextInput = ({
         secureTextEntry={type === 'password' ? true : false}
         value={value}
         editable={isEditable}
+        keyboardType={isNumeric ? 'numeric' : 'default'}
       />
     </TouchableOpacity>
   ) : (
-    <TextInput
-      style={[styles.inputView, {fontSize: 20}]}
-      placeholder={placeholder}
-      onFocus={() => {
-        setFocusTextInput(true);
-      }}
-    />
-  );
+      <TextInput
+        style={[styles.inputView, { fontSize: 20 }]}
+        placeholder={placeholder}
+        onFocus={() => {
+          setFocusTextInput(true);
+        }}
+      />
+    );
 };
 
 CustomTextInput.propTypes = {
@@ -63,9 +71,11 @@ CustomTextInput.propTypes = {
   onChangeHandler: Proptypes.func.isRequired,
   value: Proptypes.string,
   isEditable: Proptypes.bool,
+  isNumeric: Proptypes.bool
 };
 CustomTextInput.defaultProps = {
   isEditable: true,
+  isNumeric: false
 };
 
 export default CustomTextInput;
